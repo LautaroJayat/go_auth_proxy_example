@@ -9,6 +9,7 @@ import (
 func welcome(w http.ResponseWriter, r *http.Request) {
 	if(r.Host != "localhost:8081"){
 		w.WriteHeader(http.StatusForbidden)
+		return
 	}
 	w.Header().Add("x-method", r.Method)
 	w.Header().Add("x-url", r.RequestURI)
