@@ -16,7 +16,7 @@ export Auth="123456"
 run go proxy/main.go
 ```
 
-This will start our auth proxy in `localhost:8081` and will redirect traffic to `http://localhost:8080` only if there is an header like `"Auth: 123456789"`
+This will start our auth proxy in `localhost:8081` and will redirect traffic to `http://localhost:8080` only if there is an header like `"Auth: 123456"`
 
 3. Open another terminal and start making some requests
 
