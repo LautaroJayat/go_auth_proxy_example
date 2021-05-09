@@ -4,10 +4,15 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 )
 
 func welcome(w http.ResponseWriter, r *http.Request) {
-	if(r.Host != "localhost:8081"){
+	if r.Host != "localhost:8081" {
+		w.WriteHeader(http.StatusForbidden)
+		return
+	}
+	if os.Getenv("SECRET") != "" && r.Header.Get("SECRET") != os.Getenv("SECRET") {
 		w.WriteHeader(http.StatusForbidden)
 		return
 	}
