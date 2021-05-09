@@ -8,7 +8,7 @@ Inside, that function it can do any kind of checks:
 * Do some signature checkings
 * What you wish
 
-If you want to give an early response, just use the `http.ResponseWriter`. If you want to fordward the response to the `httputil.ReverseProxy` just pass it as an argument to the HOC function and then usit in the returned function.
+If you want to give an early response, just use the `http.ResponseWriter`. If you want to fordward the response to the `httputil.ReverseProxy` just pass it as an argument to the high order function and then usit in the returned function.
 
 The most basic implementation is the following one:
 
