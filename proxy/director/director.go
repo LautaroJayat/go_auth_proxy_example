@@ -2,15 +2,14 @@ package director
 
 import (
 	"net/http"
-	"os"
+
+	"github.com/lautarojayat/auth_proxy/proxy/config"
 )
 
-
-func NewDirector() func(req *http.Request){
-	host:= os.Getenv("HOST")
-	scheme:= os.Getenv("SCHEME")
-	return func(req *http.Request){
-		req.URL.Host = host
-		req.URL.Scheme = scheme
+func NewDirector(config *config.Configs) func(req *http.Request) {
+	return func(req *http.Request) {
+		req.URL.Host = config.TargetHost
+		req.URL.Scheme = config.Scheme
+		req.Header.Add("x-secret", config.TargetSecret)
 	}
 }

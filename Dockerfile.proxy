@@ -1,0 +1,10 @@
+FROM golang:1.18-alpine as build
+WORKDIR /build
+COPY ./go.mod /build/go.mod
+COPY ./go.sum /build/go.sum
+COPY ./proxy .
+RUN go build -o ./proxy ./main.go
+
+FROM scratch
+COPY --from=build /build/proxy /app/proxy
+ENTRYPOINT ["/app/proxy"]

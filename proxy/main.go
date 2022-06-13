@@ -2,30 +2,34 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-	"net/http/httputil"
-	"os"
+	"log"
 
-	d "github.com/lautarojayat/auth_proxy/proxy/director"
-	rt "github.com/lautarojayat/auth_proxy/proxy/router"
+	c "github.com/lautarojayat/auth_proxy/proxy/config"
 )
 
-var rp = httputil.ReverseProxy{
-	Director: d.NewDirector(),
-}
+func main() {
+	fmt.Println("Starting proxy server")
 
-func main(){
+	configs := c.GetConfigs()
 
-	fmt.Printf("SCHEME %v\n", os.Getenv("SCHEME"))
-	fmt.Printf("HOST %v\n", os.Getenv("HOST"))
-	fmt.Printf("Auth %v\n", os.Getenv("AUTH"))
-	fmt.Println("Starting proxy server")	
-	
-	r := rt.NewRouter(&rp)
+	fmt.Printf("PROXY_HOST %v\n", configs.ProxyHost)
+	fmt.Printf("TARGET_HOST %v\n", configs.TargetHost)
+	fmt.Printf("SCHEME %v\n", configs.Scheme)
+	fmt.Printf("Auth %v\n", configs.SecretString)
 
-	srv := http.Server{
-		Handler: r,
-		Addr: "localhost:8081",
+	srv := createServer(configs)
+
+	go startServer(srv)
+
+	stop, ctx, cancel := notifyWhenDone()
+
+	<-stop
+
+	defer cancel()
+
+	if err := srv.Shutdown(ctx); err != nil {
+		log.Println(err)
 	}
-	srv.ListenAndServe()
+
+	fmt.Println("Proxy has received a kill/terminate signal, bye bye!")
 }
