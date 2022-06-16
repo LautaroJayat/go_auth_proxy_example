@@ -3,7 +3,7 @@ package director
 import (
 	"net/http"
 
-	"github.com/lautarojayat/auth_proxy/proxy/config"
+	"github.com/lautarojayat/go_auth_proxy_example/proxy/config"
 )
 
 func NewDirector(config *config.Configs) func(req *http.Request) {

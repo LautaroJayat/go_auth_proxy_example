@@ -9,11 +9,11 @@ import (
 func main() {
 	fmt.Println("Starting target server")
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", createWelcomeController(os.Getenv("SECRET")))
+	mux.HandleFunc("/", createWelcomeController(os.Getenv("TARGET_SECRET")))
 
 	srv := http.Server{
 		Handler: mux,
-		Addr:    "localhost:8080",
+		Addr:    ":8000",
 	}
 	srv.ListenAndServe()
 }

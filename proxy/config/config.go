@@ -6,7 +6,7 @@ type Configs struct {
 	TargetHost   string
 	ProxyHost    string
 	Scheme       string
-	SecretString string
+	ProxySecret  string
 	TargetSecret string
 }
 
@@ -15,7 +15,7 @@ func GetConfigs() *Configs {
 		os.Getenv("TARGET_HOST"),
 		os.Getenv("PROXY_HOST"),
 		os.Getenv("SCHEME"),
-		os.Getenv("AUTH"),
+		os.Getenv("PROXY_SECRET"),
 		os.Getenv("TARGET_SECRET"),
 	}
 }

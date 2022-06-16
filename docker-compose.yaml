@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  proxy:
+    build:
+      context: ./
+      dockerfile: Dockerfile.proxy
+    ports:
+      - '8000:8000'
+    env_file: ./example.env
+    links:
+      - target
+
+  target:
+    build:
+      context: ./
+      dockerfile: Dockerfile.target
+    env_file: ./example.env
+    ports:
+      - '8001:8000'
+
+  k6:
+    image: loadimpact/k6
+    volumes:
+      - ./client/client.js:/scripts/client.js
+    command: ["run", "/scripts/client.js"]
+    links:
+      - target
+      - proxy

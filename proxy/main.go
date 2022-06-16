@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	c "github.com/lautarojayat/auth_proxy/proxy/config"
+	c "github.com/lautarojayat/go_auth_proxy_example/proxy/config"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 	fmt.Printf("PROXY_HOST %v\n", configs.ProxyHost)
 	fmt.Printf("TARGET_HOST %v\n", configs.TargetHost)
 	fmt.Printf("SCHEME %v\n", configs.Scheme)
-	fmt.Printf("Auth %v\n", configs.SecretString)
+	fmt.Printf("Auth %v\n", configs.ProxySecret)
 
 	srv := createServer(configs)
 

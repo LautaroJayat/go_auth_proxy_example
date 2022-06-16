@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -9,9 +10,9 @@ import (
 	"os/signal"
 	"time"
 
-	c "github.com/lautarojayat/auth_proxy/proxy/config"
-	d "github.com/lautarojayat/auth_proxy/proxy/director"
-	rt "github.com/lautarojayat/auth_proxy/proxy/router"
+	c "github.com/lautarojayat/go_auth_proxy_example/proxy/config"
+	d "github.com/lautarojayat/go_auth_proxy_example/proxy/director"
+	rt "github.com/lautarojayat/go_auth_proxy_example/proxy/router"
 )
 
 func createReverseProxy(configs *c.Configs) httputil.ReverseProxy {
@@ -21,6 +22,7 @@ func createReverseProxy(configs *c.Configs) httputil.ReverseProxy {
 }
 
 func startServer(srv http.Server) {
+	fmt.Println("starting server")
 	if err := srv.ListenAndServe(); err != nil {
 		log.Println(err)
 	}
@@ -38,7 +40,7 @@ func createServer(configs *c.Configs) http.Server {
 	r := rt.NewRouter(&rp, configs)
 	srv := http.Server{
 		Handler: r,
-		Addr:    configs.ProxyHost,
+		Addr:    ":8000",
 	}
 	return srv
 }
